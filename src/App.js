@@ -1,5 +1,5 @@
 import { Routes, Route, Link} from "react-router-dom";
-import { useReducer, useRef, useEffect } from 'react';
+import React, { useReducer, useRef, useEffect, useState } from 'react';
 import './App.css';
 import Home from "./pages/Home";
 import New from "./pages/New";
@@ -27,6 +27,9 @@ const mockData = [
   }
 ]
 
+export const DiaryStateContext = React.createContext();
+export const DiaryDispatchContext = React.createContext();
+
 function reducer(state, action){
   switch(action.type){
     case "CREATE": {
@@ -50,6 +53,7 @@ function reducer(state, action){
 }
 
 function App() {
+  const [isDataLoaded, setIsdataLoaded] = useState(false);
   const [data, dispatch] = useReducer(reducer, []);
   const idRef = useRef(0);
 
@@ -57,7 +61,8 @@ function App() {
     dispatch({
       type: "INIT",
       data: mockData,
-    })
+    });
+    setIsdataLoaded(true);
   }, []);
 
   const onCreate = (date, content, emotionId) => {
@@ -92,16 +97,24 @@ function App() {
     });
   }
 
-  return (
-    <div className='App'>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/new" element={<New />} />
-        <Route path="/diary/:id" element={<Diary />} />
-        <Route path="/edit" element={<Edit />} />
-      </Routes>
-    </div>
-  )
+  if(!isDataLoaded){
+    return <div>데이터를 불러오는 중입니다.</div>
+  }else {
+    return (
+      <DiaryStateContext.Provider value={data}>
+        <DiaryDispatchContext.Provider value = {{onCreate, onUpdate, onDelete}}>
+          <div className='App'>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/new" element={<New />} />
+              <Route path="/diary/:id" element={<Diary />} />
+              <Route path="/edit/:id" element={<Edit />} />
+            </Routes>
+          </div>
+        </DiaryDispatchContext.Provider>
+      </DiaryStateContext.Provider>
+    );
+  }
 }
 
 export default App;
