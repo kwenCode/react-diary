@@ -4,7 +4,7 @@ import emotion3 from "./img/emotion3.png";
 import emotion4 from "./img/emotion4.png";
 import emotion5 from "./img/emotion5.png";
 
-export const getEmotionImgByid = (emotionId) => {
+export const getEmotionImgById = (emotionId) => {
     const targetEmotionId = String(emotionId);
     switch(targetEmotionId){
         case "1":
@@ -39,27 +39,27 @@ export const emotionList = [
     {
         id: 1,
         name: "완전 좋음",
-        img: getEmotionImgByid(1),
+        img: getEmotionImgById(1),
     },
     {
         id: 2,
         name: "좋음",
-        img: getEmotionImgByid(2),
+        img: getEmotionImgById(2),
     },
     {
         id: 3,
         name: "그럭저럭",
-        img: getEmotionImgByid(3),
+        img: getEmotionImgById(3),
     },
     {
         id: 4,
         name: "나쁨",
-        img: getEmotionImgByid(4),
+        img: getEmotionImgById(4),
     },
     {
         id: 5,
         name: "끔찍함",
-        img: getEmotionImgByid(5),
+        img: getEmotionImgById(5),
     },
 ]
 
