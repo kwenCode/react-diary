@@ -1,5 +1,5 @@
 import "./Editor.css";
-import { useEffect ,useState } from "react";
+import { useEffect ,useState, useCallback } from "react";
 import { emotionList, getFormattedDate } from "../util";
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
@@ -35,12 +35,12 @@ const Editor = ({ initData, onSubmit }) => {
         navigate(-1);
     }
 
-    const handleChangeEmotion = (emotionId) => {
-        setState({
+    const handleChangeEmotion = useCallback((emotionId) => {
+        setState((state) => ({
             ...state,
             emotionId,
-        });
-    }
+        }));
+    },[]);
 
     useEffect(() => {
         if(initData){
@@ -49,7 +49,7 @@ const Editor = ({ initData, onSubmit }) => {
                 date: getFormattedDate(new Date(parseInt(initData.date))),
             })
         }
-    }, [initData]);
+    }, [initData]); 
 
     return(
         <div className="Editor">
