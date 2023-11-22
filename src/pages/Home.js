@@ -1,6 +1,7 @@
 import Button from "../component/Button";
 import Header from "../component/Header";
 import DiaryList from "../component/DiaryList";
+import EmotionCount from "../component/EmotionCount";
 import { useState, useContext, useEffect } from "react";
 import { DiaryStateContext } from "../App";
 import { getMonthRangeByDate, setPageTitle } from "../util";
@@ -42,6 +43,7 @@ const Home = () => {
                 leftChild={<Button text={"<"} onClick={onDecresaMonth}/>}
                 rightChild={<Button text={">"} onClick={onIncreaseMonth}/>}
             />
+            <EmotionCount data={data}/>
             <DiaryList data={filteredData}/>
         </div>
     )
